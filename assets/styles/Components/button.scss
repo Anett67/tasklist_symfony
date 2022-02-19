@@ -1,0 +1,14 @@
+.btn {
+  border-radius: 4px;
+  cursor: pointer;
+
+  &-submit {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 0;
+    margin-top: 25px;
+    background-color: $springSecondary;
+    border: none;
+  }
+}

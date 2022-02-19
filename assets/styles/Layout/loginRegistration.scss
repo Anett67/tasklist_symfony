@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  color: $springPrimaryDark;
+  font-family: SourceSansProRegular;
+
+  .login-register-page {
+    display: flex;
+
+    .image-wrapper {
+      width: 25%;
+      height: 100vh;
+      background-image: url("../../images/img_login_registration.png");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .form-wrapper {
+      width: 75%;
+      display: flex;
+      justify-content: center;
+      padding: 175px;
+
+      form {
+        background-color: white;
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+
+        .error {
+          color: $springDanger;
+        }
+
+        .link-wrapper {
+          text-align: center;
+          margin-top: 10px;
+          a {
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+}

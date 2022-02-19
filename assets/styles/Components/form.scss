@@ -1,0 +1,18 @@
+label {
+  color: $springSecondary;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 15px;
+  height: 35px;
+  border-radius: 4px;
+  background-color: $springPrimaryLight;
+  border: 1px solid $springPrimaryMedium;
+  color: $springPrimaryMedium;
+
+  &:focus {
+    outline: 1px solid $springPrimaryMedium;
+  }
+}
