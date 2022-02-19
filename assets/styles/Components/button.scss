@@ -1,15 +1,30 @@
 .btn {
   border-radius: 4px;
   cursor: pointer;
+  box-shadow: 0px 3px 6px #00000029;
+  color: white;
+  font-weight: bold;
+  padding: 12px 0;
+  margin-top: 25px;
+  background-color: $springSecondary;
+  border: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+
+  &:hover {
+    filter: brightness(90%);
+    transform: translateY(-2px);
+  }
 
   &-submit {
-    color: white;
     font-size: 12px;
-    font-weight: bold;
     padding: 12px 0;
-    margin-top: 25px;
-    background-color: $springSecondary;
-    border: none;
-    text-transform: uppercase;
+  }
+
+  &-large {
+    width: 80%;
+    max-width: 460px;
+    font-size: 16px;
+    height: 54px;
   }
 }
