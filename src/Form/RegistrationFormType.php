@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -17,8 +18,32 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('first_name')
-            ->add('last_name')
+            ->add('first_name', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner votre nom',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Ce champ doit compter minimum {{ limit }} charactères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
+            ->add('last_name', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner votre nom',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Ce champ doit compter minimum {{ limit }} charactères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
             ->add('email')
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -31,7 +56,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Ce champ doit compter minimum {{ limit }} charactères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
