@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Tasklist;
+use App\Form\TasklistCreationFormType;
 use App\Repository\TasklistRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +13,7 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @Route("/{id}", name="tasklist-selected")
+     * @Route("/tasklist/{id}", name="tasklist-selected")
      */
     public function index(Tasklist $list = null,TasklistRepository $repository): Response
     {
@@ -27,9 +27,14 @@ class HomeController extends AbstractController
             ['updated_at' => 'DESC']
         );
 
+        
+        $tasklist = new Tasklist();
+        $tasklistCreationForm = $this->createForm(TasklistCreationFormType::class, $tasklist);
+
         return $this->render('home/index.html.twig', [
             'tasklists' => $tasklists,
-            'activeTask' => $list ?? $tasklists[0]
+            'activeTask' => $list ?? $tasklists[0],
+            'tasklistCreationForm' => $tasklistCreationForm->createView()
         ]);
     }
 

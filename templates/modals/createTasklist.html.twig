@@ -1,0 +1,13 @@
+<div id="create-list" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-title">Créer une nouvelle liste de tâche</div>
+    {{ form_start(tasklistCreationForm) }}
+    {{ form_row(tasklistCreationForm.title, {'attr': {'class': 'form-modal', 'label': false}}) }}
+    <div class="btn-block">
+      <button class="btn btn-outlined" type="submit" class="btn">Annuler</button>
+      <button class="btn btn-submit" type="submit" class="btn">Enregistrer</button>
+    </div>
+    {{ form_end(tasklistCreationForm) }}
+  </div>
+</div>
