@@ -165,4 +165,15 @@ class Tasklist
 
         return $this;
     }
+
+    public function getCompletedTasks() {
+
+        $total = 0;
+
+        foreach ($this->getTasks() as $task){
+            if($task->getStatus()->getName() === 'Terminé') ++$total;
+        }
+
+        return $total;
+    }
 }

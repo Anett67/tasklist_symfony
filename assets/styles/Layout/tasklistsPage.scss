@@ -11,6 +11,12 @@
     flex-direction: column;
     position: relative;
 
+    .tasklists {
+      height: 50vh;
+      width: 100%;
+      //overflow-y: scroll;
+    }
+
     .bottom-links {
       margin-top: auto;
       display: flex;

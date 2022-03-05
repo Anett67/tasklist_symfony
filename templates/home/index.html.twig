@@ -3,7 +3,23 @@
 <div class="tasklist-page">
   <div class="sidebar">
     <h2>Mes listes de tâches</h2>
-    <div class="tasklists"></div>
+    <div class="tasklists">
+      {% if tasklists|length > 0 %} {% for list in tasklists %}
+      <div class="list {{ list.id is same as activeTask.id ? 'active' : '' }}">
+        <div class="list-title">{{ list.title }}</div>
+        <div class="list-right-block">
+          <div class="completed-tasks">{{ list.getCompletedTasks }}/{{ list.tasks | length }}</div>
+          <a href="{{ path('tasklist-selected', { id: list.id }) }}">
+            {% if list.id is same as activeTask.id %}
+            <img src="{{ asset('/build/images/next_pink.png') }}" />
+            {% else %}
+            <img src="{{ asset('/build/images/next.png') }}" />
+            {% endif %}
+          </a>
+        </div>
+      </div>
+      {% endfor %} {% else %} {% endif %}
+    </div>
     <div class="bottom-links">
       <a class="uppercase">Choisir un thème</a>
       <a class="uppercase">Mon Compte</a>
@@ -13,12 +29,17 @@
       <img src="{{ asset('/build/images/left-arrow.png') }}" />
     </div>
   </div>
+
   <div class="tasklist-content">
+    {% if tasklists|length > 0 %}
+    <h2>{{ activeTask.title }}</h2>
+    {% else %}
     <div class="empty-state">
       <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">
       <p class="emtpy-state">Vous n'avez pas encore créé de liste de tâche</p>
-      <button class="btn btn-large">+ AJOUTER UNE LISTE</button>
+      <a class="btn btn-large">+ AJOUTER UNE LISTE</a>
     </div>
+    {% endif %}
   </div>
 </div>
 

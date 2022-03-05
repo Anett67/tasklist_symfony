@@ -10,6 +10,10 @@
   border: none;
   text-transform: uppercase;
   transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
 
   &:hover {
     filter: brightness(90%);
@@ -27,4 +31,8 @@
     font-size: 16px;
     height: 54px;
   }
+}
+
+a.btn {
+  height: auto;
 }
