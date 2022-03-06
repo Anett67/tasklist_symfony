@@ -5,12 +5,12 @@
     <h2>Mes listes de tâches</h2>
     <div class="tasklists">
       {% if tasklists|length > 0 %} {% for list in tasklists %}
-      <div class="list {{ list.id is same as activeTask.id ? 'active' : '' }}">
+      <div class="list {{ list.id is same as activeTasklist.id ? 'active' : '' }}">
         <div class="list-title">{{ list.title }}</div>
         <div class="list-right-block">
           <div class="completed-tasks">{{ list.getCompletedTasks }}/{{ list.tasks | length }}</div>
           <a href="{{ path('tasklist-selected', { id: list.id }) }}">
-            {% if list.id is same as activeTask.id %}
+            {% if list.id is same as activeTasklist.id %}
             <img src="{{ asset('/build/images/next_pink.png') }}" />
             {% else %}
             <img src="{{ asset('/build/images/next.png') }}" />
@@ -40,7 +40,32 @@
 
   <div class="tasklist-content">
     {% if tasklists|length > 0 %}
-    <h2>{{ activeTask.title }}</h2>
+    <div class="tasklist-header">
+      <div class="list-title-block">
+        <h2 class="list-title">{{ activeTasklist.title }}</h2>
+        <img class="edit-icon" src="{{ asset('/build/images/edit.png') }}" alt="" />
+      </div>
+      <div class="progress-bar-block">
+        <div class="progress-bar">
+          <div class="progress" style="width: {{ activeTasklist.progress }}%;"></div>
+        </div>
+        <div class="percentage">{{ activeTasklist.progress }}%</div>
+      </div>
+      <div class="tasklist-actions">
+        <button id="archive-tasklist" class="btn action archive-btn">
+          {{ activeTasklist.archivedAt ? "Activer la liste" : "Archiver la liste" }}
+        </button>
+        <button id="delete-tasklist" class="btn action delete-btn">Supprimer la liste</button>
+      </div>
+    </div>
+    <div class="tasks-block">
+      <button id="create-task" class="btn action create-task-btn">+ Ajouter une tâche</button>
+      {% if activeTasklist.tasks|length > 0 %} {% else %}
+      <div class="tasks-empty-state">
+        <p class="tasks-empty-state-text">Vous n'avez pas encore créé de tâche dans cette liste.</p>
+      </div>
+      {% endif %}
+    </div>
     {% else %}
     <div class="empty-state">
       <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">

@@ -36,3 +36,23 @@
 a.btn {
   height: auto;
 }
+
+.tasklist-actions {
+  display: flex;
+}
+
+.action {
+  font-size: 14px;
+  text-transform: none;
+  font-weight: 400;
+  width: 170px;
+  margin: 0 5px;
+}
+
+.archive-btn {
+  background-color: $springPrimaryDark;
+}
+
+.delete-btn {
+  background-color: $springDanger;
+}

@@ -6,6 +6,7 @@ use App\Repository\TasklistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TasklistRepository::class)
@@ -21,6 +22,13 @@ class Tasklist
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *  min = 2,
+     *  max = 255,
+     *  minMessage = "Le champ 'titre' doit contenit minimum {{ limit }} caractères",
+     *  maxMessage = "Le champ 'titre' doit contenit minimum {{ limit }} caractères"
+     * )
      */
     private $title;
 
@@ -114,7 +122,7 @@ class Tasklist
 
     public function getProgress(): ?int
     {
-        return $this->progress;
+        return $this->progress ?? 0;
     }
 
     public function setProgress(?int $progress): self
