@@ -14,3 +14,4 @@ import "./styles/app.scss"
 import "./bootstrap"
 
 import "./js/modals"
+import "./js/formSubmit"

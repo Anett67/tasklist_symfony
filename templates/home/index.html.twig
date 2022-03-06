@@ -52,10 +52,22 @@
         <div class="percentage">{{ activeTasklist.progress }}%</div>
       </div>
       <div class="tasklist-actions">
-        <button id="archive-tasklist" class="btn action archive-btn">
-          {{ activeTasklist.archivedAt ? "Activer la liste" : "Archiver la liste" }}
-        </button>
-        <button id="delete-tasklist" class="btn action delete-btn">Supprimer la liste</button>
+        <a href="{{ path('tasklist_archive', { id: activeTasklist.id }) }}">
+          <form id="tasklist-archive" method="POST" style="display: inline-block" action="{{ path('tasklist_archive', { id: activeTasklist.id }) }}">
+            <input type="hidden" name="_method" value="delete" />
+            <input type="hidden" name="_token" value="{{ csrf_token('ARCH' ~ activeTasklist.id) }}" />
+            <button id="archive-tasklist" class="btn action archive-btn">
+              {{ activeTasklist.archivedAt ? "Activer la liste" : "Archiver la liste" }}
+            </button>
+          </form>
+        </a>
+        <a href="{{ path('tasklist_delete', { id: activeTasklist.id }) }}">
+          <form id="tasklist-delete" method="POST" style="display: inline-block" action="{{ path('tasklist_delete', { id: activeTasklist.id }) }}">
+            <input type="hidden" name="_method" value="delete" />
+            <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ activeTasklist.id) }}" />
+            <button id="delete-tasklist" class="btn action delete-btn">Supprimer la liste</button>
+          </form>
+        </a>
       </div>
     </div>
     <div class="tasks-block">

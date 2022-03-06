@@ -30,13 +30,15 @@ class HomeController extends AbstractController
             ['updated_at' => 'DESC']
         );
         
-        $tasklist = new Tasklist();
+        $tasklist = $list ?? new Tasklist();
         $tasklistCreationForm = $this->createForm(TasklistCreationFormType::class, $tasklist);
         $tasklistCreationForm->handleRequest($request);
 
         if($tasklistCreationForm->isSubmitted() && $tasklistCreationForm->isValid()){
             $tasklist->setUser($this->getUser());
-            $tasklist->setCreatedAt(new DateTimeImmutable());
+            if(!$tasklist->getId()){
+                $tasklist->setCreatedAt(new DateTimeImmutable());
+            }
             $tasklist->setUpdatedAt(new DateTimeImmutable());
             $manager->persist($tasklist);
             $manager->flush();
@@ -50,5 +52,4 @@ class HomeController extends AbstractController
             'tasklistCreationForm' => $tasklistCreationForm->createView()
         ]);
     }
-
 }
