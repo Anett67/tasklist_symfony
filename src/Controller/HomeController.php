@@ -16,7 +16,7 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @Route("/tasklist/{id}", name="tasklist-selected")
+     * @Route("/tasklist/{id}", name="tasklist-selected", requirements={"id":"\d+"})
      */
     public function index(Tasklist $list = null,TasklistRepository $repository, Request $request, EntityManagerInterface $manager): Response
     {
@@ -30,26 +30,9 @@ class HomeController extends AbstractController
             ['updated_at' => 'DESC']
         );
         
-        $tasklist = $list ?? new Tasklist();
-        $tasklistCreationForm = $this->createForm(TasklistCreationFormType::class, $tasklist);
-        $tasklistCreationForm->handleRequest($request);
-
-        if($tasklistCreationForm->isSubmitted() && $tasklistCreationForm->isValid()){
-            $tasklist->setUser($this->getUser());
-            if(!$tasklist->getId()){
-                $tasklist->setCreatedAt(new DateTimeImmutable());
-            }
-            $tasklist->setUpdatedAt(new DateTimeImmutable());
-            $manager->persist($tasklist);
-            $manager->flush();
-
-            return $this->redirectToRoute('home');
-        }
-
         return $this->render('home/index.html.twig', [
             'tasklists' => $tasklists,
-            'activeTasklist' => $list ?? $tasklists[0],
-            'tasklistCreationForm' => $tasklistCreationForm->createView()
+            'activeTasklist' => $list ?? $tasklists[0]
         ]);
     }
 }

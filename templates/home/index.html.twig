@@ -1,91 +1,58 @@
 {% extends 'base.html.twig' %} {% block title %}Mes listes de tâches{% endblock %} {% block body %}
 
 <div class="tasklist-page">
-  <div class="sidebar">
-    <h2>Mes listes de tâches</h2>
-    <div class="tasklists">
-      {% if tasklists|length > 0 %} {% for list in tasklists %}
-      <div class="list {{ list.id is same as activeTasklist.id ? 'active' : '' }}">
-        <div class="list-title">{{ list.title }}</div>
-        <div class="list-right-block">
-          <div class="completed-tasks">{{ list.getCompletedTasks }}/{{ list.tasks | length }}</div>
-          <a href="{{ path('tasklist-selected', { id: list.id }) }}">
-            {% if list.id is same as activeTasklist.id %}
-            <img src="{{ asset('/build/images/next_pink.png') }}" />
-            {% else %}
-            <img src="{{ asset('/build/images/next.png') }}" />
-            {% endif %}
-          </a>
-        </div>
-      </div>
-      {% endfor %} {% else %} {% endif %}
-    </div>
-    <button class="btn create-list">+ Ajouter une liste</button>
-    <div class="show-archives">
-      <span>Voir les listes archivées</span>
-      <label class="switch">
-        <input type="checkbox" />
-        <span class="slider"></span>
-      </label>
-    </div>
-    <div class="bottom-links">
-      <a class="uppercase">Choisir un thème</a>
-      <a class="uppercase">Mon Compte</a>
-      <a>Se déconnecter</a>
-    </div>
-    <div class="close-icon-wrapper">
-      <img src="{{ asset('/build/images/left-arrow.png') }}" />
-    </div>
-  </div>
+    {% include "sidebar.html.twig" %}
 
-  <div class="tasklist-content">
-    {% if tasklists|length > 0 %}
-    <div class="tasklist-header">
-      <div class="list-title-block">
-        <h2 class="list-title">{{ activeTasklist.title }}</h2>
-        <img class="edit-icon" src="{{ asset('/build/images/edit.png') }}" alt="" />
-      </div>
-      <div class="progress-bar-block">
-        <div class="progress-bar">
-          <div class="progress" style="width: {{ activeTasklist.progress }}%;"></div>
+    <div class="page-content">
+        {% if tasklists|length > 0 %}
+        <div class="tasklist-header">
+            <div class="list-title-block">
+                <h2 class="list-title">{{ activeTasklist.title }}</h2>
+                <a href="{{ path('tasklist_edit', { id: activeTasklist.id }) }}">
+                    <img class="edit-icon" src="{{ asset('/build/images/edit.png') }}" alt="" />
+                </a>
+            </div>
+            <div class="progress-bar-block">
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ activeTasklist.progress }}%;"></div>
+                </div>
+                <div class="percentage">{{ activeTasklist.progress }}%</div>
+            </div>
+            <div class="tasklist-actions">
+                <a href="{{ path('tasklist_archive', { id: activeTasklist.id }) }}">
+                    <form id="tasklist-archive" method="POST" style="display: inline-block" action="{{ path('tasklist_archive', { id: activeTasklist.id }) }}">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="{{ csrf_token('ARCH' ~ activeTasklist.id) }}" />
+                        <button id="archive-tasklist" class="btn action archive-btn">
+                            {{ activeTasklist.archivedAt ? "Activer la liste" : "Archiver la liste" }}
+                        </button>
+                    </form>
+                </a>
+                <a href="{{ path('tasklist_delete', { id: activeTasklist.id }) }}">
+                    <form id="tasklist-delete" method="POST" style="display: inline-block" action="{{ path('tasklist_delete', { id: activeTasklist.id }) }}">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ activeTasklist.id) }}" />
+                        <button id="delete-tasklist" class="btn action delete-btn">Supprimer la liste</button>
+                    </form>
+                </a>
+            </div>
         </div>
-        <div class="percentage">{{ activeTasklist.progress }}%</div>
-      </div>
-      <div class="tasklist-actions">
-        <a href="{{ path('tasklist_archive', { id: activeTasklist.id }) }}">
-          <form id="tasklist-archive" method="POST" style="display: inline-block" action="{{ path('tasklist_archive', { id: activeTasklist.id }) }}">
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="_token" value="{{ csrf_token('ARCH' ~ activeTasklist.id) }}" />
-            <button id="archive-tasklist" class="btn action archive-btn">
-              {{ activeTasklist.archivedAt ? "Activer la liste" : "Archiver la liste" }}
-            </button>
-          </form>
-        </a>
-        <a href="{{ path('tasklist_delete', { id: activeTasklist.id }) }}">
-          <form id="tasklist-delete" method="POST" style="display: inline-block" action="{{ path('tasklist_delete', { id: activeTasklist.id }) }}">
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ activeTasklist.id) }}" />
-            <button id="delete-tasklist" class="btn action delete-btn">Supprimer la liste</button>
-          </form>
-        </a>
-      </div>
+        <div class="tasks-block">
+            <button id="create-task" class="btn action create-task-btn">+ Ajouter une tâche</button>
+            {% if activeTasklist.tasks|length > 0 %} {% else %}
+            <div class="tasks-empty-state">
+                <p class="tasks-empty-state-text">Vous n'avez pas encore créé de tâche dans cette liste.</p>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">
+            <p class="emtpy-state">Vous n'avez pas encore créé de liste de tâche</p>
+            <a class="btn btn-large">+ AJOUTER UNE LISTE</a>
+        </div>
+        {% endif %}
     </div>
-    <div class="tasks-block">
-      <button id="create-task" class="btn action create-task-btn">+ Ajouter une tâche</button>
-      {% if activeTasklist.tasks|length > 0 %} {% else %}
-      <div class="tasks-empty-state">
-        <p class="tasks-empty-state-text">Vous n'avez pas encore créé de tâche dans cette liste.</p>
-      </div>
-      {% endif %}
-    </div>
-    {% else %}
-    <div class="empty-state">
-      <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">
-      <p class="emtpy-state">Vous n'avez pas encore créé de liste de tâche</p>
-      <a class="btn btn-large">+ AJOUTER UNE LISTE</a>
-    </div>
-    {% endif %}
-  </div>
 </div>
 
-{% include "modals/createTasklist.html.twig" %} {% endblock %}
+{% endblock %}

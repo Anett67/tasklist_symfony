@@ -1,0 +1,36 @@
+<div class="sidebar">
+    <h2>Mes listes de tâches</h2>
+    <div class="tasklists">
+        {% if tasklists|length > 0 %} {% for list in tasklists %}
+        <div class="list {{ list.id is same as activeTasklist.id ? 'active' : '' }}">
+            <div class="list-title">{{ list.title }}</div>
+            <div class="list-right-block">
+                <div class="completed-tasks">{{ list.getCompletedTasks }}/{{ list.tasks | length }}</div>
+                <a href="{{ path('tasklist-selected', { id: list.id }) }}">
+                    {% if list.id is same as activeTasklist.id %}
+                    <img src="{{ asset('/build/images/next_pink.png') }}" />
+                    {% else %}
+                    <img src="{{ asset('/build/images/next.png') }}" />
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+        {% endfor %} {% else %} {% endif %}
+    </div>
+    <a href="{{ path('tasklist_create') }}" class="btn create-list">+ Ajouter une liste</a>
+    <div class="show-archives">
+        <span>Voir les listes archivées</span>
+        <label class="switch">
+            <input type="checkbox" />
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div class="bottom-links">
+        <a class="uppercase">Choisir un thème</a>
+        <a class="uppercase">Mon Compte</a>
+        <a>Se déconnecter</a>
+    </div>
+    <div class="close-icon-wrapper">
+        <img src="{{ asset('/build/images/left-arrow.png') }}" />
+    </div>
+</div>

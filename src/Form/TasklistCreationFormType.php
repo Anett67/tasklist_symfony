@@ -13,7 +13,7 @@ class TasklistCreationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [ 'label' => false ])
+            ->add('title', TextType::class, [ 'label' => 'Titre'])
         ;
     }
 

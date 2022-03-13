@@ -1,146 +1,146 @@
 .tasklist-page {
-  display: flex;
-
-  .sidebar {
-    color: white;
-    background-color: $springPrimaryDark;
-    height: 96vh;
-    min-width: 300px;
-    padding: 2%;
     display: flex;
-    flex-direction: column;
-    position: relative;
 
-    .tasklists {
-      height: 50vh;
-      width: 100%;
-      //overflow-y: scroll;
-    }
+    .sidebar {
+        color: white;
+        background-color: $springPrimaryDark;
+        height: 96vh;
+        min-width: 300px;
+        padding: 2%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
 
-    .show-archives {
-      font-size: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 30px;
-    }
-
-    .bottom-links {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-
-      a {
-        margin: 10px 0;
-        cursor: pointer;
-
-        &.uppercase {
-          text-transform: uppercase;
+        .tasklists {
+            height: 50vh;
+            width: 100%;
+            //overflow-y: scroll;
         }
-      }
-    }
 
-    .close-icon-wrapper {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $springSecondary;
-      box-shadow: 0px 3px 6px #00000029;
-      border-radius: 50%;
-      cursor: pointer;
-      position: absolute;
-      bottom: 30px;
-      right: -24px;
-
-      img {
-        width: 24px;
-        height: 24px;
-      }
-    }
-  }
-
-  .tasklist-content {
-    width: calc(100% - 300px);
-    padding: 50px;
-
-    .tasklist-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .list-title-block {
-      display: flex;
-      max-width: 350px;
-      height: auto;
-      justify-content: space-between;
-      align-items: center;
-
-      h2.list-title {
-        text-transform: uppercase;
-      }
-
-      .edit-icon {
-        width: 29px;
-        cursor: pointer;
-        margin: 0 10px;
-      }
-    }
-
-    .progress-bar-block {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex: 1;
-      margin: 0 15px;
-      .progress-bar {
-        height: 10px;
-        width: 80%;
-        border-radius: 50px;
-        background-color: $springPrimaryLight;
-        min-width: 150px;
-        max-width: 400px;
-        .progress {
-          height: 100%;
-          background-color: $springPrimaryDark;
-          border-radius: 50px;
+        .show-archives {
+            font-size: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
         }
-      }
-      .percentage {
-        color: $springSecondary;
-        margin-left: 10px;
-      }
+
+        .bottom-links {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+
+            a {
+                margin: 10px 0;
+                cursor: pointer;
+
+                &.uppercase {
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+        .close-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $springSecondary;
+            box-shadow: 0px 3px 6px #00000029;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            bottom: 30px;
+            right: -24px;
+
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
     }
 
-    .empty-state {
-      margin-top: 200px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
+    .page-content {
+        width: calc(100% - 300px);
+        padding: 50px;
 
-      img {
-        width: 200px;
-      }
+        .tasklist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-      p {
-        font-size: 30px;
-        font-weight: bold;
-        margin-top: 60px;
-        text-align: center;
-      }
+        .list-title-block {
+            display: flex;
+            max-width: 350px;
+            height: auto;
+            justify-content: space-between;
+            align-items: center;
+
+            h2.list-title {
+                text-transform: uppercase;
+            }
+
+            .edit-icon {
+                width: 29px;
+                cursor: pointer;
+                margin: 0 10px;
+            }
+        }
+
+        .progress-bar-block {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+            margin: 0 15px;
+            .progress-bar {
+                height: 10px;
+                width: 80%;
+                border-radius: 50px;
+                background-color: $springPrimaryLight;
+                min-width: 150px;
+                max-width: 400px;
+                .progress {
+                    height: 100%;
+                    background-color: $springPrimaryDark;
+                    border-radius: 50px;
+                }
+            }
+            .percentage {
+                color: $springSecondary;
+                margin-left: 10px;
+            }
+        }
+
+        .empty-state {
+            margin-top: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+
+            img {
+                width: 200px;
+            }
+
+            p {
+                font-size: 30px;
+                font-weight: bold;
+                margin-top: 60px;
+                text-align: center;
+            }
+        }
+
+        .tasks-block {
+            margin-top: 60px;
+
+            .tasks-empty-state {
+                margin-top: 40px;
+            }
+        }
     }
-
-    .tasks-block {
-      margin-top: 60px;
-
-      .tasks-empty-state {
-        margin-top: 40px;
-      }
-    }
-  }
 }
