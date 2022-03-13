@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="tasks-block">
-            <button id="create-task" class="btn action create-task-btn">+ Ajouter une tâche</button>
+            <a href="{{ path('task_create', { tasklist: activeTasklist.id }) }}" class="btn action create-task-btn">+ Ajouter une tâche</a>
             {% if activeTasklist.tasks|length > 0 %} {% else %}
             <div class="tasks-empty-state">
                 <p class="tasks-empty-state-text">Vous n'avez pas encore créé de tâche dans cette liste.</p>
@@ -49,7 +49,7 @@
         <div class="empty-state">
             <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">
             <p class="emtpy-state">Vous n'avez pas encore créé de liste de tâche</p>
-            <a class="btn btn-large">+ AJOUTER UNE LISTE</a>
+            <a href="{{ path('tasklist_create') }}" class="btn btn-large">+ AJOUTER UNE LISTE</a>
         </div>
         {% endif %}
     </div>
