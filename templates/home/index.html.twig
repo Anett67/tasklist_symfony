@@ -39,20 +39,49 @@
         </div>
         <div class="tasks-block">
             <a href="{{ path('task_create', { tasklist: activeTasklist.id }) }}" class="btn action create-task-btn">+ Ajouter une tâche</a>
-            {% if activeTasklist.tasks|length > 0 %} {% else %}
+            {% if activeTasklist.tasks|length > 0 %}
+            <div class="tasks">
+                {% for task in activeTasklist.tasks %}
+                <div class="task">
+                    <span class="task-title">{{ task.title }}</span>
+                    <span class="task-deadline">{{ task.deadline|date("d/m/Y") }}</span>
+                    {% if task.priority is same as 0 %} 
+                        <span class="task-priority">Mineur</span> 
+                    {% elseif task.priority is same as 1 %} 
+                        <span class="task-priority">Normal</span> 
+                    {% else %} 
+                        <span class="task-priority">Majeur</span> 
+                    {% endif %}
+                    <span class="task-status {% if task.status.name is same as "À faire" %}to-do{% elseif task.status.name is same as "Terminé" %}done{% endif %}">
+                        {{ task.status.name }}
+                    </span>
+                    <div class="task-actions">
+                        <a class="task-action" href="{{ path('task_edit', { tasklist: activeTasklist.id, task: task.id }) }}">
+                            <img src="{{ asset('/build/images/edit_blue.png') }}" alt="" />
+                        </a>
+                        <a class="task-action" href="{{ path('task_delete', {tasklist: activeTasklist.id, task: task.id }) }}">
+                            <form id="task-delete" method="POST" style="display: inline-block" action="{{ path('task_delete', {tasklist: activeTasklist.id, task: task.id }) }}">
+                                <input type="hidden" name="_method" value="delete" />
+                                <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ task.id) }}" />
+                                <button id="delete-task" type="submit" class="btn-delete-task"><img src="{{ asset('/build/images/delete.png') }}" alt="" /></button>
+                            </form>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
             <div class="tasks-empty-state">
                 <p class="tasks-empty-state-text">Vous n'avez pas encore créé de tâche dans cette liste.</p>
             </div>
+            {% endif %} {% else %}
+            <div class="empty-state">
+                <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">
+                <p class="emtpy-state">Vous n'avez pas encore créé de liste de tâche</p>
+                <a href="{{ path('tasklist_create') }}" class="btn btn-large">+ AJOUTER UNE LISTE</a>
+            </div>
             {% endif %}
         </div>
-        {% else %}
-        <div class="empty-state">
-            <img src="{{ asset("/build/images/clipboard_green.png") }}" alt="">
-            <p class="emtpy-state">Vous n'avez pas encore créé de liste de tâche</p>
-            <a href="{{ path('tasklist_create') }}" class="btn btn-large">+ AJOUTER UNE LISTE</a>
-        </div>
-        {% endif %}
     </div>
 </div>
-
 {% endblock %}

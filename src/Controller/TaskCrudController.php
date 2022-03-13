@@ -53,4 +53,18 @@ class TaskCrudController extends AbstractController
             'taskForm' => $taskForm->createView()
         ]);
     }
+
+    /**
+     * @Route("tasklist/{tasklist}/task/{task}/delete", name="task_delete", requirements={"tasklist":"\d+", "task":"\d+"})
+     */
+    public function taskDelete(Tasklist $tasklist, Task $task, Request $request, EntityManagerInterface $manager): Response
+    {
+        if($this->isCsrfTokenValid('SUP' . $task->getId(), $request->get('_token'))){
+            $manager->remove($task);
+            $manager->flush();
+            $this->addFlash("success",  "La tâche '" . $task->getTitle() . "' suppression a été effectuée");
+        }
+        
+        return $this->redirectToRoute('tasklist-selected', array('id' => $tasklist->getId()));
+    }
 }

@@ -1,27 +1,27 @@
 {% extends 'base.html.twig' %} {% block title %}Se connecter{% endblock %} {% block body %}
 <div class="login-register-page">
-  <div class="image-wrapper"></div>
+    <div class="image-wrapper"></div>
 
-  <div class="form-wrapper">
-    <form method="post">
-      <h3>Se connecter</h3>
-      <label for="inputEmail">Email</label>
-      <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus />
-      <label for="inputPassword">Mot de passe</label>
-      <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required />
+    <div class="form-wrapper register-login">
+        <form method="post">
+            <h3>Se connecter</h3>
+            <label for="inputEmail">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus />
+            <label for="inputPassword">Mot de passe</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required />
 
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
-      {% if error %}
-      <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-      {% endif %}
+            {% if error %}
+            <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-      <button class="btn btn-submit" type="submit">Se connecter</button>
+            <button class="btn btn-submit" type="submit">Se connecter</button>
 
-      <div class="link-wrapper">
-        <a href="{{ path('app_register') }}">Créer un compte</a>
-      </div>
-    </form>
-  </div>
+            <div class="link-wrapper">
+                <a href="{{ path('app_register') }}">Créer un compte</a>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

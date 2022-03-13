@@ -1,0 +1,48 @@
+.tasks {
+    margin-top: 40px;
+
+    .task {
+        margin: 15px 0;
+        background-color: $springPrimaryLight;
+        padding: 10px 10px 10px 30px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .task-title {
+            width: 30%;
+        }
+
+        .task-deadline {
+            width: 15%;
+        }
+
+        .task-priority {
+            width: 15%;
+        }
+
+        .task-status {
+            width: 15%;
+
+            &.to-do {
+                color: $springSecondary;
+            }
+
+            &.done {
+                color: $springSuccess;
+            }
+        }
+
+        .task-actions {
+            width: 15%;
+            .task-action {
+                text-decoration: none;
+                img {
+                    width: 26px;
+                    margin: 0px 5px;
+                }
+            }
+        }
+    }
+}
