@@ -1,4 +1,8 @@
 .flash-success {
     margin-top: 20px;
     color: $springSuccess;
+
+    &.mb {
+        margin-bottom: 10px;
+    }
 }

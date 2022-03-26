@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %} {% block title %}Mon profil{% endblock %} {% block body %}
+
+<div class="tasklist-page">
+    {% include "sidebar.html.twig" %}
+    <div class="page-content">
+        <div class="form-wrapper">
+            <h2 class="list-title">Mon profil</h2>
+            {% for message in app.flashes('success') %}
+            <div class="flash-success mb">
+                <div>{{ message }}</div>
+            </div>
+            {% endfor %}
+            {{ form_start(userForm) }}
+            {{ form_row(userForm.first_name) }}
+            {{ form_row(userForm.last_name) }}
+            {{ form_row(userForm.email) }}
+            <div class="btn-block">
+                <button class="btn btn-submit" type="submit" class="btn">Enregistrer</button>
+            </div>
+            {{ form_end(userForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
