@@ -17,9 +17,8 @@ class TaskCrudController extends AbstractController
 {
     /**
      * @Route("tasklist/{tasklist}/task/creation", name="task_create", requirements={"tasklist":"\d+"})
-     * @Route("tasklist/{tasklist}/task/{task}/edit", name="task_edit", requirements={"tasklist":"\d+", "task":"\d+"})
      */
-    public function index(Tasklist $tasklist = null, Task $task = null,TasklistRepository $repository, Request $request, EntityManagerInterface $manager): Response
+    public function index(Tasklist $tasklist,TasklistRepository $repository, Request $request, EntityManagerInterface $manager): Response
     {
         if(!$this->isGranted('IS_AUTHENTICATED_FULLY')){
             return $this->redirectToRoute('app_login');
@@ -31,14 +30,52 @@ class TaskCrudController extends AbstractController
             ['updated_at' => 'DESC']
         );
 
-        $task = $task ?? new Task();
+        $task = new Task();
         $taskForm = $this->createForm(TaskFormType::class, $task);
         $taskForm->handleRequest($request);
 
         if($taskForm->isSubmitted() && $taskForm->isValid()){
-            if(!$task->getId()){
-                $task->setCreatedAt(new DateTimeImmutable());
-            }
+            $task->setCreatedAt(new DateTimeImmutable());
+            $task->setTasklist($tasklist);
+            $task->setUpdatedAt(new DateTimeImmutable());
+            $manager->persist($task);
+
+            $tasklist->setProgress($tasklist->calculateProgress());
+
+            $manager->persist($tasklist);
+
+            $manager->flush();
+
+            return $this->redirectToRoute('tasklist-selected', array('id' => $tasklist->getId()));
+        }
+        
+        return $this->render('task_crud/index.html.twig', [
+            'tasklists' => $tasklists,
+            'activeTasklist' => $list ?? $tasklists[0],
+            'taskForm' => $taskForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("tasklist/{tasklist}/task/{task}/edit", name="task_edit", requirements={"tasklist":"\d+", "task":"\d+"})
+     */
+    public function taskEdit(Tasklist $tasklist, Task $task,TasklistRepository $repository, Request $request, EntityManagerInterface $manager): Response
+    {
+        if(!$this->isGranted('IS_AUTHENTICATED_FULLY')){
+            return $this->redirectToRoute('app_login');
+        }
+
+        $tasklists = $repository->findBy(
+            ['user' => $this->getUser()->getId(),
+            'archived_at' => null],
+            ['updated_at' => 'DESC']
+        );
+
+        $task = $task;
+        $taskForm = $this->createForm(TaskFormType::class, $task);
+        $taskForm->handleRequest($request);
+
+        if($taskForm->isSubmitted() && $taskForm->isValid()){
             $task->setTasklist($tasklist);
             $task->setUpdatedAt(new DateTimeImmutable());
             $manager->persist($task);
