@@ -39,11 +39,10 @@ class TaskCrudController extends AbstractController
             $task->setTasklist($tasklist);
             $task->setUpdatedAt(new DateTimeImmutable());
             $manager->persist($task);
+            $manager->flush();
 
             $tasklist->setProgress($tasklist->calculateProgress());
-
             $manager->persist($tasklist);
-
             $manager->flush();
 
             $this->addFlash('success',  'La tâche "' . $task->getTitle() . '" a bien été enregistrée.');
@@ -105,6 +104,8 @@ class TaskCrudController extends AbstractController
     {
         if($this->isCsrfTokenValid('SUP' . $task->getId(), $request->get('_token'))){
             $manager->remove($task);
+            $manager->flush();
+
             $tasklist->setProgress($tasklist->calculateProgress());
             $manager->persist($tasklist);
             $manager->flush();
