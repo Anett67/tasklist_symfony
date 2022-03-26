@@ -184,4 +184,11 @@ class Tasklist
 
         return $total;
     }
+
+    public function calculateProgress() {
+
+        if(!count($this->getTasks())) return 0;
+        
+        return floor($this->getCompletedTasks() / count($this->getTasks()) * 100);
+    }
 }

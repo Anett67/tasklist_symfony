@@ -42,6 +42,11 @@ class TaskCrudController extends AbstractController
             $task->setTasklist($tasklist);
             $task->setUpdatedAt(new DateTimeImmutable());
             $manager->persist($task);
+
+            $tasklist->setProgress($tasklist->calculateProgress());
+
+            $manager->persist($tasklist);
+
             $manager->flush();
 
             return $this->redirectToRoute('tasklist-selected', array('id' => $tasklist->getId()));
