@@ -26,7 +26,8 @@ class TaskFormType extends AbstractType
                 ]
             ])
             ->add('deadline', DateType::class, [
-                'label' => 'Date limite'
+                'label' => 'Date limite (jour/mois/année)',
+                'format' => 'dd-MM-yyy'
             ])
             ->add('status', EntityType::class, [
                 'label' => 'Status',
