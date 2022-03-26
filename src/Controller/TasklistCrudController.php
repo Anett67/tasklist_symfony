@@ -43,6 +43,7 @@ class TasklistCrudController extends AbstractController
             $manager->persist($tasklist);
             $manager->flush();
 
+            $this->addFlash('success',  'La liste "' . $tasklist->getTitle() . '" a bien été enregistrée.');
             return $this->redirectToRoute('home');
         }
 
@@ -75,7 +76,7 @@ class TasklistCrudController extends AbstractController
         if($this->isCsrfTokenValid('SUP' . $tasklist->getId(), $request->get('_token'))){
             $manager->remove($tasklist);
             $manager->flush();
-            $this->addFlash("success",  "La liste '" . $tasklist->getTitle() . "' suppression a été effectuée");
+            $this->addFlash("success",  "La liste '" . $tasklist->getTitle() . "' a bien été supprimée.");
         }
         
         return $this->redirectToRoute('home');

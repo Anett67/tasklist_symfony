@@ -39,6 +39,12 @@
         </div>
         <div class="tasks-block">
             <a href="{{ path('task_create', { tasklist: activeTasklist.id }) }}" class="btn action create-task-btn">+ Ajouter une tâche</a>
+            <!-- Flash messages -->
+            {% for message in app.flashes('success') %}
+                <div class="flash-success">
+                    <div>{{ message }}</div>
+                </div>    
+            {% endfor %}
             {% if activeTasklist.tasks|length > 0 %}
             <div class="tasks">
                 {% for task in activeTasklist.tasks %}

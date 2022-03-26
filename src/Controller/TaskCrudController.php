@@ -46,6 +46,7 @@ class TaskCrudController extends AbstractController
 
             $manager->flush();
 
+            $this->addFlash('success',  'La tâche "' . $task->getTitle() . '" a bien été enregistrée.');
             return $this->redirectToRoute('tasklist-selected', array('id' => $tasklist->getId()));
         }
         
@@ -86,6 +87,7 @@ class TaskCrudController extends AbstractController
 
             $manager->flush();
 
+            $this->addFlash('success',  'La tâche "' . $task->getTitle() . '" a bien été modifiée.');
             return $this->redirectToRoute('tasklist-selected', array('id' => $tasklist->getId()));
         }
         
@@ -103,8 +105,11 @@ class TaskCrudController extends AbstractController
     {
         if($this->isCsrfTokenValid('SUP' . $task->getId(), $request->get('_token'))){
             $manager->remove($task);
+            $tasklist->setProgress($tasklist->calculateProgress());
+            $manager->persist($tasklist);
             $manager->flush();
-            $this->addFlash("success",  "La tâche '" . $task->getTitle() . "' suppression a été effectuée");
+
+            $this->addFlash("success",  "La tâche '" . $task->getTitle() . "' a bien été supprimée.");
         }
         
         return $this->redirectToRoute('tasklist-selected', array('id' => $tasklist->getId()));
